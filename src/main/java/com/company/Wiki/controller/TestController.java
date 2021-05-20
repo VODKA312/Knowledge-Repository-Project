@@ -1,9 +1,7 @@
 package com.company.Wiki.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 //用来返回字符串 @RestController
 //用来返回页面 @Controller 前后端分离的项目基本上不用
 @RestController
@@ -16,6 +14,11 @@ public class TestController {
      */
     @GetMapping("/hello")
     public String hello(){
-        return "hello,world";
+        return "Hello World";
+    }
+
+    @PostMapping("/hello/name")
+    public String helloName(String Name){
+        return "hello,Your Name is "+Name;
     }
 }
