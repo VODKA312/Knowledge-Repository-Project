@@ -41,8 +41,9 @@
                              type="XMLMAPPER"/>
 
         <!-- 生成对应demo表 -->
-        <table tableName="demo" domainObjectName="Demo"/>
-        <!--<table tableName="ebook"/>-->
+        <!--<table tableName="demo" domainObjectName="Demo"/>-->
+        <!-- 生成对应的table表 -->
+        <table tableName="ebook"/>
         <!--<table tableName="category"/>-->
         <!--<table tableName="doc"/>-->
         <!--<table tableName="content"/>-->
