@@ -1,10 +1,15 @@
 package com.company.Wiki.service;
 
 import com.company.Wiki.domain.Ebook;
+import com.company.Wiki.domain.EbookExample;
 import com.company.Wiki.mapper.EbookMapper;
+import com.company.Wiki.req.EbookReq;
+import com.company.Wiki.resp.EbookResp;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,7 +20,21 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public List<Ebook> list() {
-        return ebookMapper.selectByExample(null);
+    public List<EbookResp> list(EbookReq req) {
+        EbookExample ebookExample = new EbookExample();
+        //创造where条件
+        EbookExample.Criteria criteria = ebookExample.createCriteria();
+        criteria.andNameLike("%"+req.getName()+"%");
+        List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
+        //循环ebooklist里的实体，让他转换为EbookResp
+
+        List<EbookResp> respList = new ArrayList<>();
+        for (Ebook ebook : ebookList) {
+            EbookResp ebookResp = new EbookResp();
+            //使用Utils工具类拷贝属性
+            BeanUtils.copyProperties(ebook,ebookResp);
+            respList.add(ebookResp);
+        }
+        return respList;
     }
 }

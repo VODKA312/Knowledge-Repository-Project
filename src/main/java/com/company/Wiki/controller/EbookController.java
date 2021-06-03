@@ -1,7 +1,8 @@
 package com.company.Wiki.controller;
 
-import com.company.Wiki.domain.Ebook;
+import com.company.Wiki.req.EbookReq;
 import com.company.Wiki.resp.CommonResp;
+import com.company.Wiki.resp.EbookResp;
 import com.company.Wiki.service.EbookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,9 @@ public class EbookController {
      * 如果为true，则弹出content的消息
      * 如果为false，则弹出message的消息
      */
-    public CommonResp list() {
-        CommonResp<List<Ebook>> resp = new CommonResp<>();
-        List<Ebook> list = ebookService.list();
+    public CommonResp list(EbookReq req) {
+        CommonResp<List<EbookResp>> resp = new CommonResp<>();
+        List<EbookResp> list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }
