@@ -1,24 +1,8 @@
 <template>
   <a-layout>
-    <a-layout-header class="header">
-      <div class="logo" />
-      <a-menu
-              theme="dark"
-              mode="horizontal"
-              v-model:selectedKeys="selectedKeys1"
-              :style="{ lineHeight: '64px' }"
-      >
-        <a-menu-item key="1">nav 1</a-menu-item>
-        <a-menu-item key="2">nav 2</a-menu-item>
-        <a-menu-item key="3">nav 3</a-menu-item>
-      </a-menu>
-    </a-layout-header>
-    <a-layout>
-      <router-view />
-    </a-layout>
-    <a-layout-footer style="text-align: center">
-       操作系统算法展示平台©2021 版权归杨奕恬所有
-    </a-layout-footer>
+    <the-header></the-header>
+    <router-view />
+    <the-footer></the-footer>
   </a-layout>
   <!--
   <div id="nav">
@@ -28,6 +12,18 @@
   <router-view/> -->
 </template>
 
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  import theHeader from "@/components/theHeader.vue";
+  import theFooter from "@/components/theFooter.vue";
+  export default defineComponent({
+    name: 'app',
+    components: {
+      theHeader,
+      theFooter,
+    }
+  });
+</script>
 <style>
   /**
 #app {
