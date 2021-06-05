@@ -4,7 +4,6 @@
         <a-menu
                 theme="dark"
                 mode="horizontal"
-                v-model:selectedKeys="selectedKeys1"
                 :style="{ lineHeight: '64px',background:'#1d292e' }"
         >
             <a-menu-item class="navbar-brand">

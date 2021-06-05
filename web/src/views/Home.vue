@@ -68,9 +68,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import axios from 'axios';
 
 export default defineComponent({
   name: 'Home',
+  setup(){
+    console.log("set up");
+    //请求地址
+    axios.get("http://localhost:8088/ebook/list?name=算法")
+            .then(function(response){ //也可以写成(response) =>
+              console.log(response);//打印响应结果
+            });
+  },
   components: {
     //HelloWorld,
   },
