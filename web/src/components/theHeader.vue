@@ -170,7 +170,7 @@
     .nav a{
         color: #adb4b7;
     }
-    [data-theme='dark'] .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
         background-color: #42b983;
     }
 </style>
