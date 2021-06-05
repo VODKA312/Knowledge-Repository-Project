@@ -59,14 +59,14 @@
       <a-layout-content
               :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
-        Content
+        <pre>{{ebooks}}</pre>
       </a-layout-content>
     </a-layout>
     </a-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent,onMounted,ref } from 'vue';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import axios from 'axios';
 
@@ -74,14 +74,26 @@ export default defineComponent({
   name: 'Home',
   setup(){
     console.log("set up");
-    //请求地址
-    axios.get("http://localhost:8088/ebook/list?name=算法")
-            .then(function(response){ //也可以写成(response) =>
-              console.log(response);//打印响应结果
-            });
+    const ebooks = ref(); //定义一个变量接收数据并渲染在前端上,使用ref()让它变成响应式的数据，vue3新特性
+    onMounted(function () {
+      /*
+      1,初始化
+       */
+      //请求地址
+      console.log("onMounted")
+      axios.get("http://localhost:8088/ebook/list?name=算法")
+              .then(function(response){ //也可以写成(response) =>
+                //拿到响应的数据
+                const data = response.data;
+                ebooks.value = data.content;
+                console.log(response);//打印响应结果
+              });
+    })
+    return{
+      ebooks,
+    }
   },
   components: {
-    //HelloWorld,
   },
 });
 </script>
