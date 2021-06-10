@@ -85,18 +85,6 @@
 <script lang="ts">
 import { defineComponent,onMounted,ref } from 'vue';
 import axios from 'axios';
-const listData: any = [] //创建一个List数组
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'https://www.antdv.com/',
-    title: `ant design vue part ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description:
-            'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  });
-}
 export default defineComponent({
   name: 'Home',
   setup(){
@@ -108,7 +96,7 @@ export default defineComponent({
        */
       //请求地址
       console.log("onMounted")
-      axios.get("http://localhost:8088/ebook/list?name=算法")
+      axios.get("http://localhost:8088/ebook/list")
               .then(function(response){ //也可以写成(response) =>
                 //拿到响应的数据
                 const data = response.data;
@@ -118,7 +106,6 @@ export default defineComponent({
     })
     return{
       ebooks,
-      listData,
       pagination:{
         onChange: (page: any) => {
           console.log(page);
@@ -136,3 +123,13 @@ export default defineComponent({
   },
 });
 </script>
+<!-- scoped表示只在当前组件起作用 -->
+<style scoped>
+  .ant-avatar {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 8%;
+    margin: 5px 0;
+  }
+</style>
