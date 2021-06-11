@@ -1,12 +1,33 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+//引入axios
+import axios from 'axios';
 //引入ant-desgin-vue
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 //引入所有图标库
 import * as Icons from '@ant-design/icons-vue';
+//全局配置
+//axios.defaults.baseURL = process.env.VUE_APP_SERVER;
+/**
+ * axios拦截器
+ */
+axios.interceptors.request.use(function (config) {
+    console.log('请求参数：', config);
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
+axios.interceptors.response.use(function (response) {
+    //打印返回结果
+    console.log('返回结果：', response);
+    return response;
+}, error => {
+    console.log('返回错误：', error);
+    return Promise.reject(error);
+});
 const app = createApp(App);
 app.use(store).use(router).use(Antd).mount('#app');
 // 全局使用图标

@@ -59,7 +59,7 @@
       <a-layout-content
               :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
-        <a-list item-layout="vertical" size="large" :grid="{ gutter: 15, column: 3 }" :pagination="pagination" :data-source=ebooks>
+        <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source=ebooks>
           <template #renderItem="{ item }">
             <a-list-item key="item.name">
               <template #actions>
@@ -101,7 +101,7 @@ export default defineComponent({
                 //拿到响应的数据
                 const data = response.data;
                 ebooks.value = data.content;
-                console.log(response);//打印响应结果
+                //console.log(response);//打印响应结果
               });
     })
     return{
