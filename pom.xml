@@ -44,6 +44,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- AOP 依赖 -->
+		<!-- 内部包 不需要添加版本号-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<!-- 集成阿里巴巴依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.70</version>
+		</dependency>
 	</dependencies>
 
 	<build>
