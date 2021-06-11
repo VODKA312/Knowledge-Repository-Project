@@ -16,13 +16,12 @@
           <template #title>
                 <span>
                   <user-outlined />
-                  subnav 1111
+                  资源管理界面
                 </span>
           </template>
-          <a-menu-item key="1">option1</a-menu-item>
-          <a-menu-item key="2">option2</a-menu-item>
-          <a-menu-item key="3">option3</a-menu-item>
-          <a-menu-item key="4">option4</a-menu-item>
+          <a-menu-item key="ebook">
+            <router-link to="/admin/ebook">电子书管理</router-link>
+          </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
           <template #title>
