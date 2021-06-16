@@ -23,6 +23,7 @@
             </p>
             <a-table :columns="columns"
                      :data-source="ebooks"
+                     :pagination="pagination"
                      :row-key="record => record.id"
                      :loading="loading"
                      @change="handleTableChange"

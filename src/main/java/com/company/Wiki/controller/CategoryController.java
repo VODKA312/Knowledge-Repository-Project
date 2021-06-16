@@ -2,14 +2,15 @@ package com.company.Wiki.controller;
 
 import com.company.Wiki.req.CategoryQueryReq;
 import com.company.Wiki.req.CategorySaveReq;
-import com.company.Wiki.resp.CommonResp;
 import com.company.Wiki.resp.CategoryQueryResp;
+import com.company.Wiki.resp.CommonResp;
 import com.company.Wiki.resp.PageResp;
 import com.company.Wiki.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 //用来返回字符串 @RestController
 //用来返回页面 @Controller 前后端分离的项目基本上不用
@@ -20,6 +21,15 @@ public class CategoryController {
     //注入CategoryService的服务
     @Resource
     private CategoryService categoryService;
+
+
+    @GetMapping("/all")
+    public CommonResp all() {
+        CommonResp<List<CategoryQueryResp>> resp = new CommonResp<>();
+        List<CategoryQueryResp> list = categoryService.all();
+        resp.setContent(list);
+        return resp;
+    }
 
     @GetMapping("/list")
     /**

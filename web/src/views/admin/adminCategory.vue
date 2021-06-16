@@ -10,7 +10,7 @@
                         </a-input>
                     </a-form-item>
                     <a-form-item>
-                        <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
+                        <a-button type="primary" @click="handleQuery()">
                             查询
                         </a-button>
                     </a-form-item>
@@ -25,7 +25,7 @@
                      :data-source="categorys"
                      :row-key="record => record.id"
                      :loading="loading"
-                     @change="handleTableChange"
+                     :pagination="false"
             >
                 <template #cover="{ text: cover }">
                     <img v-if="cover" :src="cover" alt="avatar" />
@@ -110,46 +110,21 @@
             const param = ref();
             param.value = {};
             const categorys = ref();
-            const pagination = ref({
-                current: 1,
-                pageSize: 5,//分页数：每页五个
-                total: 0
-            });
             const loading = ref(false);
             /**
              * 数据查询
              **/
-            const handleQuery = (params: any) => {
+            const handleQuery = () => {
                 loading.value = true;
-                axios.get("/category/list", {
-                    params:{//将需要用的参数传进来
-                        page:params.page,
-                        size:params.size,
-                        name:param.value.name //param传进去的name参数
-                    }
-                }).then((response) => {
+                axios.get("/category/all").then((response) => {
                     loading.value = false;
                     const data = response.data;
                     if(data.success){
-                        categorys.value = data.content.list;
-                        // 重置分页按钮
-                        pagination.value.current = params.page;
-                        pagination.value.total = data.content.total;
+                        categorys.value = data.content;
                     }
                     else{
                         message.error(data.message); //打印错误信息
                     }
-                });
-            };
-
-            /**
-             * 表格点击页码时触发
-             */
-            const handleTableChange = (pagination: any) => {
-                console.log("看看自带的分页参数都有啥：" + pagination);
-                handleQuery({
-                    page: pagination.current,
-                    size: pagination.pageSize
                 });
             };
 
@@ -171,10 +146,7 @@
                         //modalLoading.value = false;
                         modalVisible.value = false;
                         // 重新加载数据
-                        handleQuery({
-                            page: pagination.value.current,
-                            size: pagination.value.pageSize,
-                        });
+                        handleQuery();
                     }
                     else {
                         message.error(data.message);
@@ -208,10 +180,7 @@
                     //如果判断成功
                     if (data.success) {
                         // 重新加载数据
-                        handleQuery({
-                            page: pagination.value.current,
-                            size: pagination.value.pageSize,
-                        });
+                        handleQuery();
                     }
                     else {
                         //message.error(data.message);
@@ -220,19 +189,14 @@
             };
 
             onMounted(() => {
-                handleQuery({
-                    page:1,
-                    size:pagination.value.pageSize //传入前端设置好的分页值
-                }); //初始的时候查一次
+                handleQuery(); //初始的时候查一次
             });
 
             return {
                 param,
                 categorys,
-                pagination,
                 columns,
                 loading,
-                handleTableChange,
                 handleQuery,
 
                 edit,
