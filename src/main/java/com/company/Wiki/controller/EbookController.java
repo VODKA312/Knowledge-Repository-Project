@@ -3,13 +3,13 @@ package com.company.Wiki.controller;
 import com.company.Wiki.req.EbookReq;
 import com.company.Wiki.resp.CommonResp;
 import com.company.Wiki.resp.EbookResp;
+import com.company.Wiki.resp.PageResp;
 import com.company.Wiki.service.EbookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 //用来返回字符串 @RestController
 //用来返回页面 @Controller 前后端分离的项目基本上不用
@@ -29,8 +29,8 @@ public class EbookController {
      * 如果为false，则弹出message的消息
      */
     public CommonResp list(EbookReq req) {
-        CommonResp<List<EbookResp>> resp = new CommonResp<>();
-        List<EbookResp> list = ebookService.list(req);
+        CommonResp<PageResp<EbookResp>> resp = new CommonResp<>();
+        PageResp<EbookResp> list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }

@@ -5,6 +5,7 @@ import com.company.Wiki.domain.EbookExample;
 import com.company.Wiki.mapper.EbookMapper;
 import com.company.Wiki.req.EbookReq;
 import com.company.Wiki.resp.EbookResp;
+import com.company.Wiki.resp.PageResp;
 import com.company.Wiki.util.CopyUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,8 +27,9 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public List<EbookResp> list(EbookReq req) {
-        PageHelper.startPage(1,5);//每页查五条记录
+    public PageResp<EbookResp> list(EbookReq req) {
+        //动态的查询数据
+        PageHelper.startPage(req.getPage(),req.getSize());//每页查五条记录
         EbookExample ebookExample = new EbookExample();
         //创造where条件
         EbookExample.Criteria criteria = ebookExample.createCriteria();
@@ -61,6 +63,11 @@ public class EbookService {
          * 使用列表复制功能，简化for循环
          */
         List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
-        return list;
+
+        PageResp<EbookResp> pageResp = new PageResp();
+        pageResp.setTotal(pageInfo.getTotal());
+        pageResp.setList(list);
+
+        return pageResp;
     }
 }
