@@ -95,7 +95,12 @@ export default defineComponent({
        */
       //请求地址
       console.log("onMounted112")
-      axios.get("/ebook/list").then(function(response){ //也可以写成(response) =>
+      axios.get("/ebook/list",{
+        params:{
+          page:1,
+          size:100 //约等于查出全部数据
+        }
+      }).then(function(response){ //也可以写成(response) =>
                 //拿到响应的数据
                 const data = response.data;
                 ebooks.value = data.content.list;
