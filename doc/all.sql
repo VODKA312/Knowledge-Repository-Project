@@ -39,3 +39,21 @@ create table `ebook` (
 insert into `ebook` (id, name, description) VALUES (1,'操作系统算法测试1','测试文档1');
 insert into `ebook` (id, name, description) VALUES (2,'操作系统算法测试2','测试文档2');
 insert into `ebook` (id, name, description) VALUES (3,'操作系统算法测试3','测试文档3');
+
+#分类 无限极扩展树形结构
+drop table if exists `category`;
+create table `category`(
+    `id` bigint not null comment 'id',
+    `parent` bigint not null default 0 comment '父id',
+    `name` varchar(50) not null comment '名称',
+    `sort` int comment '顺序',
+    primary key(`id`)
+) engine=innodb default charset=utf8mb4 comment ='分类';
+
+insert into `category`(id, parent, name, sort) values (100,000,'理论知识',100);
+insert into `category`(id, parent, name, sort) values (101,100,'操作系统理论知识',101);
+insert into `category`(id, parent, name, sort) values (102,100,'图解基础算法与数据结构',102);
+
+insert into `category`(id, parent, name, sort) values (200,000,'实践部分',200);
+insert into `category`(id, parent, name, sort) values (201,200,'图解Linux系统源码',201);
+insert into `category`(id, parent, name, sort) values (202,200,'算法与数据结构的C语言实现',202);
