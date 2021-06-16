@@ -205,9 +205,10 @@
                 // setTimeout(() => {
                 // }, 2000);
                 axios.post("/ebook/save", ebook.value).then((response) => {
+                    modalLoading.value = false; //前端返回参数了，就把loading效果去掉
                     const data = response.data; //接受响应的数据 data = CommonResp
                     if (data.success) {
-                        modalLoading.value = false;
+                        //modalLoading.value = false;
                         modalVisible.value = false;
                         // 重新加载数据
                         handleQuery({
@@ -216,7 +217,7 @@
                         });
                     }
                     else {
-                        //message.error(data.message);
+                        message.error(data.message);
                     }
                 });
             };

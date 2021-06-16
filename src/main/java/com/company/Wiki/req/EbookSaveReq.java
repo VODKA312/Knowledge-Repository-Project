@@ -1,14 +1,18 @@
 package com.company.Wiki.req;
 
+import javax.validation.constraints.NotNull;
+
 public class EbookSaveReq {
     private Long id;
 
+    @NotNull(message = "名称不能为空")
     private String name;
 
     private Long category1Id;
 
     private Long category2Id;
 
+    @NotNull(message = "描述也不能为空")
     private String description;
 
     private String cover;

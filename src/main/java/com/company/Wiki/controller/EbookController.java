@@ -43,7 +43,7 @@ public class EbookController {
      */
     @PostMapping("/save")
     //RequstBody 对应ptr中json方式的提交 如果是form表单形式(ptrp) 就不需要加任何注解
-    public CommonResp save(@RequestBody EbookSaveReq req) {
+    public CommonResp save(@Valid @RequestBody EbookSaveReq req) {
         CommonResp resp = new CommonResp<>();
         ebookService.save(req);
         return resp;
