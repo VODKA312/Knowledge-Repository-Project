@@ -3,7 +3,7 @@ package com.company.Wiki.resp;
 /**
  * 如果不涉及敏感字段或者不想给用户看见，返回值和原格式一样
  */
-public class EbookResp {
+public class EbookQueryResp {
     private Long id;
 
     private String name;

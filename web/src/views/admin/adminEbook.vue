@@ -38,12 +38,11 @@
             <a-form-item label="名称">
                 <a-input v-model:value="ebook.name" />
             </a-form-item>
-            <a-form-item label="分类">
-                <a-cascader
-                        v-model:value="categoryIds"
-                        :field-names="{ label: 'name', value: 'id', children: 'children' }"
-                        :options="level1"
-                />
+            <a-form-item label="一级分类">
+                <a-input v-model:value="ebook.category1Id" />
+            </a-form-item>
+            <a-form-item label="二级分类">
+                <a-input v-model:value="ebook.category2Id" />
             </a-form-item>
             <a-form-item label="描述">
                 <a-input v-model:value="ebook.description" type="textarea" />
@@ -175,12 +174,28 @@
             const ebook = ref(); //定义一个响应式变量
             const modalVisible = ref(false);
             const modalLoading = ref(false);
+            /**
+             * 当点击ok按钮时，触发的事件
+             **/
             const handleModalOk = () => {
                 modalLoading.value = true;
-                setTimeout(() => {
-                    modalLoading.value = false;
-                    modalVisible.value = false;
-                }, 2000);
+                // setTimeout(() => {
+                // }, 2000);
+                axios.post("/ebook/save", ebook.value).then((response) => {
+                    const data = response.data; //接受响应的数据 data = CommonResp
+                    if (data.success) {
+                        modalLoading.value = false;
+                        modalVisible.value = false;
+                        // 重新加载数据
+                        handleQuery({
+                            page: pagination.value.current,
+                            size: pagination.value.pageSize,
+                        });
+                    }
+                    else {
+                        //message.error(data.message);
+                    }
+                });
             };
 
             /**

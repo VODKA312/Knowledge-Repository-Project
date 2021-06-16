@@ -3,8 +3,9 @@ package com.company.Wiki.service;
 import com.company.Wiki.domain.Ebook;
 import com.company.Wiki.domain.EbookExample;
 import com.company.Wiki.mapper.EbookMapper;
-import com.company.Wiki.req.EbookReq;
-import com.company.Wiki.resp.EbookResp;
+import com.company.Wiki.req.EbookQueryReq;
+import com.company.Wiki.req.EbookSaveReq;
+import com.company.Wiki.resp.EbookQueryResp;
 import com.company.Wiki.resp.PageResp;
 import com.company.Wiki.util.CopyUtil;
 import com.github.pagehelper.PageHelper;
@@ -27,7 +28,7 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public PageResp<EbookResp> list(EbookReq req) {
+    public PageResp<EbookQueryResp> list(EbookQueryReq req) {
         //动态的查询数据
         PageHelper.startPage(req.getPage(),req.getSize());//每页查五条记录
         EbookExample ebookExample = new EbookExample();
@@ -62,12 +63,26 @@ public class EbookService {
         /**
          * 使用列表复制功能，简化for循环
          */
-        List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
+        List<EbookQueryResp> list = CopyUtil.copyList(ebookList, EbookQueryResp.class);
 
-        PageResp<EbookResp> pageResp = new PageResp();
+        PageResp<EbookQueryResp> pageResp = new PageResp();
         pageResp.setTotal(pageInfo.getTotal());
         pageResp.setList(list);
 
         return pageResp;
+    }
+
+
+    public void save(EbookSaveReq req){
+        //构建单体
+        Ebook ebook = CopyUtil.copy(req,Ebook.class);
+        //如果ebook.id有值，就是保存，如果ebook.id没有值，就是新增
+        if(ObjectUtils.isEmpty(req.getId())){
+            //新增
+        }
+        else{
+            //更新
+            ebookMapper.updateByPrimaryKey(ebook);
+        }
     }
 }
