@@ -79,7 +79,10 @@ public class EbookService {
         return pageResp;
     }
 
-
+    /**
+     * 保存 首先对id进行判断，如果id为空就是新建一个 如果id有值就是对当前页面进行保存
+     * @param req
+     */
     public void save(EbookSaveReq req){
         //构建单体
         Ebook ebook = CopyUtil.copy(req,Ebook.class);
@@ -93,5 +96,9 @@ public class EbookService {
             //更新
             ebookMapper.updateByPrimaryKey(ebook);
         }
+    }
+
+    public void delete(Long id){ //传入的值为id值
+        ebookMapper.deleteByPrimaryKey(id);
     }
 }

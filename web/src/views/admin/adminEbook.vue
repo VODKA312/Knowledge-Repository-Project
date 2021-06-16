@@ -24,9 +24,19 @@
                         <a-button type="primary" @click="edit(record)">
                             编辑
                         </a-button>
-                        <a-button type="danger">
-                            删除
-                        </a-button>
+                        <!-- 删除开始 -->
+                        <!-- 点击事件@confirm -->
+                        <a-popconfirm
+                                title="你确认要删掉这条记录吗？"
+                                ok-text="是"
+                                cancel-text="否"
+                                @confirm="del(record.id)"
+                                @cancel="cancel"
+                        >
+                            <a-button type="danger" >
+                                删除
+                            </a-button>
+                        </a-popconfirm>
                     </a-space>
                 </template>
             </a-table>
@@ -221,6 +231,27 @@
                 ebook.value = {}; //清空
             };
 
+            /**
+             * 删除
+             */
+            const del = (id : number) => { //long -> number
+                //发送一个delete请求
+                axios.delete("/ebook/delete/"+id).then((response) => {
+                    const data = response.data; //接受响应的数据 data = CommonResp
+                    //如果判断成功
+                    if (data.success) {
+                        // 重新加载数据
+                        handleQuery({
+                            page: pagination.value.current,
+                            size: pagination.value.pageSize,
+                        });
+                    }
+                    else {
+                        //message.error(data.message);
+                    }
+                });
+            };
+
             onMounted(() => {
                 handleQuery({
                     page:1,
@@ -237,6 +268,7 @@
 
                 edit,
                 add,
+                del,
 
                 modalVisible,
                 modalLoading,
