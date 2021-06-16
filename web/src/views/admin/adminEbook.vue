@@ -26,7 +26,7 @@
         </a-layout-content>
     </a-layout>
     <a-modal
-            title="电子书表单"
+            title="修改电子书表单"
             v-model:visible="modalVisible"
             :confirm-loading="modalLoading"
             @ok="handleModalOk"
@@ -198,5 +198,15 @@
     img {
         width: 50px;
         height: 50px;
+    }
+    .ant-btn-primary {
+        color: #fff;
+        background-color: #42b983;
+        border-color: #42b983;
+        text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+        box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+    }
+    .ant-btn-primary:hover{
+        background-color: #42b983;
     }
 </style>
