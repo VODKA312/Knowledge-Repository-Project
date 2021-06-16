@@ -5,9 +5,20 @@
         >
             <p>
                 <a-form layout="inline" :model="param">
-                    <a-button type="primary" @click="add()">
-                        新增
-                    </a-button>
+                    <a-form-item>
+                        <a-input v-model:value="param.name" placeholder="名称">
+                        </a-input>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
+                            查询
+                        </a-button>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-button type="primary" @click="add()">
+                            新增
+                        </a-button>
+                    </a-form-item>
                 </a-form>
             </p>
             <a-table :columns="columns"
@@ -72,6 +83,7 @@
     import { defineComponent, onMounted, ref } from 'vue';
     import axios from 'axios';
     import { message } from 'ant-design-vue'; //引入消息提示组件
+    import {Tool} from "@/util/tool";
 
     const columns = [
         {
@@ -111,45 +123,11 @@
         }
     ];
 
-    // const data = [
-    //     {
-    //         id:1,
-    //         category1Id: null,
-    //         category2Id: null,
-    //         cover: "/image/coverTest.jpg",
-    //         description: "测试文档1",
-    //         docCount: null,
-    //         name: "操作系统算法测试1",
-    //         viewCount: null,
-    //         voteCount: null,
-    //     },
-    //     {
-    //         id:2,
-    //         category1Id: null,
-    //         category2Id: null,
-    //         cover: "/image/coverTest.jpg",
-    //         description: "测试文档2",
-    //         docCount: null,
-    //         name: "操作系统算法测试2",
-    //         viewCount: null,
-    //         voteCount: null
-    //     },
-    //     {
-    //         id: 3,
-    //         category1Id: null,
-    //         category2Id: null,
-    //         cover: "/image/coverTest.jpg",
-    //         description: "测试文档3",
-    //         docCount: null,
-    //         name: "操作系统算法测试3",
-    //         viewCount: null,
-    //         voteCount: null
-    //     },
-    // ];
-
     export default defineComponent({
         name: 'adminEbook',
         setup() {
+            const param = ref();
+            param.value = {};
             const ebooks = ref();
             const pagination = ref({
                 current: 1,
@@ -165,7 +143,8 @@
                 axios.get("/ebook/list", {
                     params:{//将需要用的参数传进来
                         page:params.page,
-                        size:params.size
+                        size:params.size,
+                        name:param.value.name //param传进去的name参数
                     }
                 }).then((response) => {
                     loading.value = false;
@@ -227,7 +206,7 @@
              */
             const edit = (record :any) => {
                 modalVisible.value = true;
-                ebook.value = record;
+                ebook.value = Tool.copy(record); //把值复制过来
             };
 
             /**
@@ -267,11 +246,13 @@
             });
 
             return {
+                param,
                 ebooks,
                 pagination,
                 columns,
                 loading,
                 handleTableChange,
+                handleQuery,
 
                 edit,
                 add,
