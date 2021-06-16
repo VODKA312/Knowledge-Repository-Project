@@ -4,7 +4,7 @@
                 :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
         >
             <a-table :columns="columns"
-                     :data-source="data"
+                     :data-source="ebooks"
                      :row-key="record => record.id"
                      :loading="loading"
                      @change="handleTableChange"
@@ -69,41 +69,41 @@
         }
     ];
 
-    const data = [
-        {
-            id:1,
-            category1Id: null,
-            category2Id: null,
-            cover: "/image/coverTest.jpg",
-            description: "测试文档1",
-            docCount: null,
-            name: "操作系统算法测试1",
-            viewCount: null,
-            voteCount: null,
-        },
-        {
-            id:2,
-            category1Id: null,
-            category2Id: null,
-            cover: "/image/coverTest.jpg",
-            description: "测试文档2",
-            docCount: null,
-            name: "操作系统算法测试2",
-            viewCount: null,
-            voteCount: null
-        },
-        {
-            id: 3,
-            category1Id: null,
-            category2Id: null,
-            cover: "/image/coverTest.jpg",
-            description: "测试文档3",
-            docCount: null,
-            name: "操作系统算法测试3",
-            viewCount: null,
-            voteCount: null
-        },
-    ];
+    // const data = [
+    //     {
+    //         id:1,
+    //         category1Id: null,
+    //         category2Id: null,
+    //         cover: "/image/coverTest.jpg",
+    //         description: "测试文档1",
+    //         docCount: null,
+    //         name: "操作系统算法测试1",
+    //         viewCount: null,
+    //         voteCount: null,
+    //     },
+    //     {
+    //         id:2,
+    //         category1Id: null,
+    //         category2Id: null,
+    //         cover: "/image/coverTest.jpg",
+    //         description: "测试文档2",
+    //         docCount: null,
+    //         name: "操作系统算法测试2",
+    //         viewCount: null,
+    //         voteCount: null
+    //     },
+    //     {
+    //         id: 3,
+    //         category1Id: null,
+    //         category2Id: null,
+    //         cover: "/image/coverTest.jpg",
+    //         description: "测试文档3",
+    //         docCount: null,
+    //         name: "操作系统算法测试3",
+    //         viewCount: null,
+    //         voteCount: null
+    //     },
+    // ];
 
     export default defineComponent({
         name: 'adminEbook',
@@ -120,12 +120,18 @@
              **/
             const handleQuery = (params: any) => {
                 loading.value = true;
-                axios.get("/ebook/list", params).then((response) => {
+                axios.get("/ebook/list", {
+                    params:{//将需要用的参数传进来
+                        page:params.page,
+                        size:params.size
+                    }
+                }).then((response) => {
                     loading.value = false;
                     const data = response.data;
                     ebooks.value = data.content.list;
                     // 重置分页按钮
                     pagination.value.current = params.page;
+                    pagination.value.total = data.content.total;
                 });
             };
 
@@ -141,11 +147,13 @@
             };
 
             onMounted(() => {
-                handleQuery({}); //初始的时候查一次
+                handleQuery({
+                    page:1,
+                    size:pagination.value.pageSize //传入前端设置好的分页值
+                }); //初始的时候查一次
             });
 
             return {
-                data,
                 ebooks,
                 pagination,
                 columns,

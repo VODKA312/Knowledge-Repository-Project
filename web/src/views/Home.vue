@@ -98,7 +98,7 @@ export default defineComponent({
       axios.get("/ebook/list").then(function(response){ //也可以写成(response) =>
                 //拿到响应的数据
                 const data = response.data;
-                ebooks.value = data.content;
+                ebooks.value = data.content.list;
                 //console.log(response);//打印响应结果
               });
     })
