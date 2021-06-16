@@ -14,7 +14,7 @@
                 </template>
                 <template v-slot:action="{ text, record }">
                     <a-space size="small">
-                        <a-button type="primary" @click="edit">
+                        <a-button type="primary" @click="edit(record)">
                             编辑
                         </a-button>
                         <a-button type="danger">
@@ -31,7 +31,24 @@
             :confirm-loading="modalLoading"
             @ok="handleModalOk"
     >
-        <p>Test</p>
+        <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+            <a-form-item label="封面">
+                <a-input v-model:value="ebook.cover" />
+            </a-form-item>
+            <a-form-item label="名称">
+                <a-input v-model:value="ebook.name" />
+            </a-form-item>
+            <a-form-item label="分类">
+                <a-cascader
+                        v-model:value="categoryIds"
+                        :field-names="{ label: 'name', value: 'id', children: 'children' }"
+                        :options="level1"
+                />
+            </a-form-item>
+            <a-form-item label="描述">
+                <a-input v-model:value="ebook.description" type="textarea" />
+            </a-form-item>
+        </a-form>
     </a-modal>
 </template>
 
@@ -155,6 +172,7 @@
             };
 
             // -------- 表单 ---------
+            const ebook = ref(); //定义一个响应式变量
             const modalVisible = ref(false);
             const modalLoading = ref(false);
             const handleModalOk = () => {
@@ -168,8 +186,9 @@
             /**
              * 编辑
              */
-            const edit = () => {
+            const edit = (record :any) => {
                 modalVisible.value = true;
+                ebook.value = record;
             };
 
             onMounted(() => {
@@ -188,7 +207,8 @@
                 edit,
                 modalVisible,
                 modalLoading,
-                handleModalOk
+                handleModalOk,
+                ebook
             };
         },
     });
@@ -203,8 +223,6 @@
         color: #fff;
         background-color: #42b983;
         border-color: #42b983;
-        text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
-        box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
     }
     .ant-btn-primary:hover{
         background-color: #42b983;
