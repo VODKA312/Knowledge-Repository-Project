@@ -8,6 +8,7 @@ import com.company.Wiki.req.EbookSaveReq;
 import com.company.Wiki.resp.EbookQueryResp;
 import com.company.Wiki.resp.PageResp;
 import com.company.Wiki.util.CopyUtil;
+import com.company.Wiki.util.SnowFlake;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -27,6 +28,12 @@ public class EbookService {
     //使用JDK自带的注入方式
     @Resource
     private EbookMapper ebookMapper;
+
+    /**
+     * 使用雪花算法生成新增方法
+     */
+    @Resource
+    private SnowFlake snowFlake;
 
     public PageResp<EbookQueryResp> list(EbookQueryReq req) {
         //动态的查询数据
@@ -78,7 +85,9 @@ public class EbookService {
         Ebook ebook = CopyUtil.copy(req,Ebook.class);
         //如果ebook.id有值，就是保存，如果ebook.id没有值，就是新增
         if(ObjectUtils.isEmpty(req.getId())){
-            //新增
+            //新增 1.新增id(自增,uuid,雪花算法生成id) 2.将生成的id插入表中
+            ebook.setId(snowFlake.nextId());
+            ebookMapper.insert(ebook);
         }
         else{
             //更新

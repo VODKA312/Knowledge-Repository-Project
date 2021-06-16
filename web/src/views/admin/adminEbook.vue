@@ -3,6 +3,13 @@
         <a-layout-content
                 :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
         >
+            <p>
+                <a-form layout="inline" :model="param">
+                    <a-button type="primary" @click="add()">
+                        新增
+                    </a-button>
+                </a-form>
+            </p>
             <a-table :columns="columns"
                      :data-source="ebooks"
                      :row-key="record => record.id"
@@ -26,7 +33,7 @@
         </a-layout-content>
     </a-layout>
     <a-modal
-            title="修改电子书表单"
+            title="电子书表单"
             v-model:visible="modalVisible"
             :confirm-loading="modalLoading"
             @ok="handleModalOk"
@@ -206,6 +213,14 @@
                 ebook.value = record;
             };
 
+            /**
+             * 新增
+             */
+            const add = () => {
+                modalVisible.value = true;
+                ebook.value = {}; //清空
+            };
+
             onMounted(() => {
                 handleQuery({
                     page:1,
@@ -219,7 +234,10 @@
                 columns,
                 loading,
                 handleTableChange,
+
                 edit,
+                add,
+
                 modalVisible,
                 modalLoading,
                 handleModalOk,
