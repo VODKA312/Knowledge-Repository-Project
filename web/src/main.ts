@@ -10,7 +10,7 @@ import 'ant-design-vue/dist/antd.css';
 //引入所有图标库
 import * as Icons from '@ant-design/icons-vue';
 //全局配置
-//axios.defaults.baseURL = process.env.VUE_APP_SERVER;
+axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 /**
  * axios拦截器
  */
@@ -35,3 +35,5 @@ const icons: any = Icons;
 for (const i in icons) {
     app.component(i, icons[i]);
 }
+console.log('环境：', process.env.NODE_ENV);
+console.log('服务端：', process.env.VUE_APP_SERVER);

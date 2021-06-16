@@ -94,9 +94,8 @@ export default defineComponent({
       1,初始化
        */
       //请求地址
-      console.log("onMounted")
-      axios.get("http://localhost:8088/ebook/list")
-              .then(function(response){ //也可以写成(response) =>
+      console.log("onMounted112")
+      axios.get("/ebook/list").then(function(response){ //也可以写成(response) =>
                 //拿到响应的数据
                 const data = response.data;
                 ebooks.value = data.content;
@@ -125,8 +124,8 @@ export default defineComponent({
 <!-- scoped表示只在当前组件起作用 -->
 <style scoped>
   .ant-avatar {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 80px;
     line-height: 50px;
     border-radius: 8%;
     margin: 5px 0;
