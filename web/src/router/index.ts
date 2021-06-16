@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 //引入Ebook管理页面
 import adminEbook from '../views/admin/adminEbook.vue'
+//引入分类管理页面
+import adminCategory from '../views/admin/adminCategory.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin/ebook',
     name: 'adminEbook',
     component: adminEbook
+  },
+  {
+    path: '/admin/category',
+    name: 'adminCategory',
+    component: adminCategory
   }
 ]
 
