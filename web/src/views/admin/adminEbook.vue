@@ -275,10 +275,20 @@
     }
     .ant-btn-primary {
         color: #fff;
-        background-color: #42b983;
-        border-color: #42b983;
+        background-color: #009688;
+        border-color: #009688;
     }
     .ant-btn-primary:hover{
         background-color: #42b983;
+        border-color: #42b983;
+    }
+    .ant-btn-primary:focus{
+        background-color: #42b983;
+        border-color: #42b983;
+    }
+    .ant-btn-danger {
+        color: #fff;
+        background-color: #FF5722;
+        border-color: #FF5722;
     }
 </style>

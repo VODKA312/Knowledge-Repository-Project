@@ -40,7 +40,7 @@
                 //这里定义一个展开的路径
                 {
                     path: '',
-                    breadcrumbName: 'resource',
+                    breadcrumbName: 'category',
                     children: [
                         {
                             path: '/admin',

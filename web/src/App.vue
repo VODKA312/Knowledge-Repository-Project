@@ -21,11 +21,14 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent,onMounted, ref } from 'vue';
   import theHeader from "@/components/theHeader.vue";
   import theFooter from "@/components/theFooter.vue";
   import sideBar from "@/components/sideBar.vue"; //引入侧边栏组件
   import breadCrumb from "@/components/breadCrumb.vue"; //引入面包屑导航组件
+  import axios from 'axios';
+  import { message } from 'ant-design-vue';
+  import {Tool} from "@/util/tool";
   export default defineComponent({
     name: 'app',
     components: {
@@ -33,6 +36,45 @@
       theFooter,
       sideBar, //引入侧边栏组件
       breadCrumb,
+    },
+    setup(){
+      const openKeys =  ref();
+      const level1 =  ref();
+      let categorys: any;
+      /**
+       * 查询所有分类
+       **/
+      const handleQueryCategory = () => {
+        axios.get("/category/all").then((response) => {
+          const data = response.data;
+          if (data.success) {
+            categorys = data.content;
+            console.log("原始数组：", categorys);
+
+            // 加载完分类后，将侧边栏全部展开
+            openKeys.value = [];
+            for (let i = 0; i < categorys.length; i++) {
+              openKeys.value.push(categorys[i].id)
+            }
+
+            level1.value = [];
+            level1.value = Tool.array2Tree(categorys, 0);
+            console.log("树形结构：", level1.value);
+          } else {
+            message.error(data.message);
+          }
+        });
+      }
+      onMounted(() => {
+        handleQueryCategory();
+        // handleQueryEbook();
+      });
+
+      return {
+        // ebooks2: toRef(ebooks1, "books"),
+        level1,
+        openKeys
+      }
     }
   });
 </script>
