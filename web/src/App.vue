@@ -37,69 +37,81 @@
       sideBar, //引入侧边栏组件
       breadCrumb,
     },
-    setup(){
-      const openKeys =  ref();
-      const level1 =  ref();
-      let categorys: any;
-      /**
-       * 查询所有分类
-       **/
-      const handleQueryCategory = () => {
-        axios.get("/category/all").then((response) => {
-          const data = response.data;
-          if (data.success) {
-            categorys = data.content;
-            console.log("原始数组：", categorys);
-
-            // 加载完分类后，将侧边栏全部展开
-            openKeys.value = [];
-            for (let i = 0; i < categorys.length; i++) {
-              openKeys.value.push(categorys[i].id)
-            }
-
-            level1.value = [];
-            level1.value = Tool.array2Tree(categorys, 0);
-            console.log("树形结构：", level1.value);
-          } else {
-            message.error(data.message);
-          }
-        });
-      }
-      onMounted(() => {
-        handleQueryCategory();
-        // handleQueryEbook();
-      });
-
-      return {
-        // ebooks2: toRef(ebooks1, "books"),
-        level1,
-        openKeys
-      }
-    }
+    // setup(){
+    //   const ebooks = ref();
+    //   const openKeys =  ref();
+    //   const level1 =  ref();
+    //   let categorys: any;
+    //   /**
+    //    * 查询所有分类
+    //    **/
+    //   const handleQueryCategory = () => {
+    //     axios.get("/category/all").then((response) => {
+    //       const data = response.data;
+    //       if (data.success) {
+    //         categorys = data.content;
+    //         console.log("原始数组：", categorys);
+    //
+    //         // 加载完分类后，将侧边栏全部展开
+    //         openKeys.value = [];
+    //         for (let i = 0; i < categorys.length; i++) {
+    //           openKeys.value.push(categorys[i].id)
+    //         }
+    //
+    //         level1.value = [];
+    //         level1.value = Tool.array2Tree(categorys, 0);
+    //         console.log("树形结构：", level1.value);
+    //       } else {
+    //         message.error(data.message);
+    //       }
+    //     });
+    //   }
+    //
+    //   const isShowWelcome = ref(true);
+    //   let categoryId2 = 0;
+    //
+    //   const handleQueryEbook = () => {
+    //     axios.get("/ebook/list", {
+    //       params: {
+    //         page: 1,
+    //         size: 1000,
+    //         categoryId2: categoryId2
+    //       }
+    //     }).then((response) => {
+    //       const data = response.data;
+    //       ebooks.value = data.content.list;
+    //       // ebooks1.books = data.content;
+    //     });
+    //   };
+    //
+    //   const handleClick = (value: any) => {
+    //     // console.log("menu click", value)
+    //     if (value.key === 'welcome') {
+    //       isShowWelcome.value = true;
+    //     } else {
+    //       categoryId2 = value.key;
+    //       isShowWelcome.value = false;
+    //       handleQueryEbook();
+    //     }
+    //     // isShowWelcome.value = value.key === 'welcome';
+    //   };
+    //   onMounted(() => {
+    //     handleQueryCategory();
+    //     //handleQueryEbook();
+    //   });
+    //
+    //   return {
+    //     ebooks,
+    //     // ebooks2: toRef(ebooks1, "books"),
+    //     level1,
+    //     openKeys,
+    //     handleClick,
+    //     isShowWelcome,
+    //   }
+    // }
   });
 </script>
 <style>
-  /**
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}*/
   #components-layout-demo-top-side-2 .logo {
     float: left;
     width: 120px;

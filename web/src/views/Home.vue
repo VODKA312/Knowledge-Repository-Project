@@ -3,7 +3,11 @@
   <a-layout-content
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
   >
-    <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source=ebooks>
+    <div class="welcome" v-show="isShowWelcome">
+        Welcome
+    </div>
+    <!-- 电子书展示部分 -->
+    <a-list v-show="!isShowWelcome" item-layout="vertical" size="large" :pagination="pagination" :data-source=ebooks>
       <template #renderItem="{ item }">
         <a-list-item key="item.name">
           <template #actions>
@@ -50,6 +54,8 @@ export default defineComponent({
                 //console.log(response);//打印响应结果
               });
     })
+
+
     return{
       ebooks,
       pagination:{

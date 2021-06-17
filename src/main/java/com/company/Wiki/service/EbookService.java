@@ -43,6 +43,10 @@ public class EbookService {
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         //对条件进行判断，参数不为空的话才对他进行模糊查询
         if(!ObjectUtils.isEmpty(req.getName())){
+            criteria.andCategory2IdEqualTo(req.getCategoryId2());
+        }
+        //对条件进行判断，二级标签不为空的话才对他进行模糊查询
+        if(!ObjectUtils.isEmpty(req.getCategoryId2())){
             criteria.andNameLike("%"+req.getName()+"%");
         }
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
