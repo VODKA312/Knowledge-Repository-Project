@@ -6,3 +6,8 @@
 - 课程管理以及对应的练习
 使用Vue3以及springboot进行前后端分离的系统开发
 接口风格:restful
+
+### 代码生成器使用方法
+- 首先在doc/all.sql中写入对应的表和数据
+- 在generator/generator-config.xml中写入对应的生成代码的table
+- 使用mybatics-generater生成对应的表结构
