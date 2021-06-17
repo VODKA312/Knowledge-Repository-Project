@@ -8,7 +8,7 @@ import adminCategory from '../views/admin/adminCategory.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/ebook',
     name: 'Home',
     component: Home
   },

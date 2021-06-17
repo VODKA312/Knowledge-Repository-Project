@@ -85,6 +85,10 @@
     const columns = [
 
         {
+          title: '编号',
+          dataIndex: 'id'
+        },
+        {
             title: '名称',
             dataIndex: 'name'
         },

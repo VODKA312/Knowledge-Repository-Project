@@ -1,7 +1,15 @@
 <template>
   <a-layout>
     <the-header></the-header>
-    <router-view />
+    <a-layout>
+      <side-bar></side-bar>
+      <a-layout style="padding: 0 24px 24px">
+        <!-- 引入面包屑导航组件 -->
+        <bread-crumb></bread-crumb>
+        <router-view />
+      </a-layout>
+    </a-layout>
+    <!--<side-bar></side-bar> -->
     <the-footer></the-footer>
   </a-layout>
   <!--
@@ -16,11 +24,15 @@
   import { defineComponent } from 'vue';
   import theHeader from "@/components/theHeader.vue";
   import theFooter from "@/components/theFooter.vue";
+  import sideBar from "@/components/sideBar.vue"; //引入侧边栏组件
+  import breadCrumb from "@/components/breadCrumb.vue"; //引入面包屑导航组件
   export default defineComponent({
     name: 'app',
     components: {
       theHeader,
       theFooter,
+      sideBar, //引入侧边栏组件
+      breadCrumb,
     }
   });
 </script>
