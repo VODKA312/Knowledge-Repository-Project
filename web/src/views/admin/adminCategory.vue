@@ -21,11 +21,13 @@
                     </a-form-item>
                 </a-form>
             </p>
-            <a-table :columns="columns"
-                     :data-source="categorys"
-                     :row-key="record => record.id"
-                     :loading="loading"
-                     :pagination="false"
+            <a-table
+                    v-if="level1.length > 0"
+                    :columns="columns"
+                    :data-source="level1"
+                    :row-key="record => record.id"
+                    :loading="loading"
+                    :pagination="false"
             >
                 <template #cover="{ text: cover }">
                     <img v-if="cover" :src="cover" alt="avatar" />
@@ -59,18 +61,38 @@
             :confirm-loading="modalLoading"
             @ok="handleModalOk"
     >
-        <a-form :model="category" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+        <a-form :model="catgory" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
             <a-form-item label="序号">
                 <a-input v-model:value="category.sort" />
             </a-form-item>
             <a-form-item label="名称">
                 <a-input v-model:value="category.name" />
             </a-form-item>
+            <!-- 没有做下拉框的选项
             <a-form-item label="父分类编号">
                 <a-input v-model:value="category.parent" />
             </a-form-item>
             <a-form-item label="子分类编号">
                 <a-input v-model:value="category.id" />
+            </a-form-item> -->
+            <a-form-item label="父分类">
+                <a-select
+                        v-model:value="category.parent"
+                        ref="select"
+                >
+                    <a-select-option :value="0">
+                        无
+                    </a-select-option>
+                    <a-select-option v-for="c in level1"
+                                     :key="c.id"
+                                     :value="c.id"
+                                     :disabled="category.id === c.id">
+                        {{c.name}}
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="顺序">
+                <a-input v-model:value="category.sort" />
             </a-form-item>
         </a-form>
     </a-modal>
@@ -143,7 +165,7 @@
                         level1.value = [];
                         level1.value = Tool.array2Tree(categorys.value, 0);
                         console.log("树形结构：", level1);
-                        categorys.value = level1.value
+                        //categorys.value = level1.value
                     }
                     else{
                         message.error(data.message); //打印错误信息
@@ -217,7 +239,8 @@
 
             return {
                 param,
-                categorys,
+                //categorys,
+                level1,
                 columns,
                 loading,
                 handleQuery,
